@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 투표한 항목의 질문 내용 -->
+    <h1>{{question.question_text}}</h1>
+
+    <!-- Question테이블과 외래키 관계가 있는 자식 테이블인 Choice에서 현재
+    선택한 질문 하위에 등록된 답변 항목을 가져와서 출력한다. -->
+    <ul>
+      {%for choice in question.choice_set.all%}
+      <!-- 답변 -- 투표횟수 - vote문자열 -->
+      <li>
+        {{choice.choice_text}}--{{choice.votes}} vote{{choice.votes|pluralize}}
+        <!-- pluralize : 복수형 접미사로 복수인 경우 s를 붙여준다. -->
+      </li>
+      {%endfor%}
+    </ul>
+    <a href="{%url 'livepolls:detail' question.id%}">재투표 하기겠습니까??</a>
+    &nbsp;
+    <a href="/">Main 바로가기</a>
+  </body>
+</html>

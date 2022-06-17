@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 # Application definition
 # 프로젝트에 새로운 앱을 추가하면 애플리케이션을 등록한다.
 # 앱의 폴더명(livepolls) => apps.py => LivepollsConfig 클래스
+# 즉, 앱의 경로를 등록한다고 생각하면 된다.
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "livepolls.apps.LivepollsConfig",
+    "tempapps.apps.TempappsConfig",
 ]
 
 MIDDLEWARE = [
