@@ -107,12 +107,12 @@
 			with블럭안 : {{ total }} <br />
 		{% endwith %}
 		<!-- 블럭을 벗어나면 소멸되어 출력되지 않는다. -->
-		with블럭밖 : {{ total }}
+			with블럭밖 : {{ total }}
 
 
 		<!-- 
-				URLConf에 지정된 네임스페이스를 통해 확장성 있는 URL을 생성해준다.
-				특히 URL에 변수처리를 해야할 경우 유용하게 사용할 수 있다.    
+			URLConf에 지정된 네임스페이스를 통해 확장성 있는 URL을 생성해준다.
+			특히 URL에 변수처리를 해야할 경우 유용하게 사용할 수 있다.    
 		-->
 		<h2>url</h2>
 		<li>url1 : {% url 'tempapps:my_filter' %}</li>
@@ -120,9 +120,9 @@
 		<li>url3 : {% url 'livepolls:detail' 10 %}</li>
 		<li>url4 : {% url 'livepolls:results' 20 %}</li>
 		<!--  
-				path("<int:question_id>/results/", views.results, name="results"),
-				=> 위의 url4의 경우 해당 path와 매칭되어 URL이 생성된다.
-						뒤에 기술한 20은 question_id의 값이 된다.
+			path("<int:question_id>/results/", views.results, name="results"),
+			=> 위의 url4의 경우 해당 path와 매칭되어 URL이 생성된다.
+					뒤에 기술한 20은 question_id의 값이 된다.
 		-->
 	</body>
 </html>

@@ -1,0 +1,20 @@
+{% extends 'base_books.html' %}
+
+{% block content %}
+    <h2>Book List</h2>
+    <ul>
+    <!-- Views에서 전달해준 context변수가 object_list이므로 이를 통해 반복 출력한다.
+    object_list는 우리가 저장한것이 아니라 제네릭뷰가 자동으로 저장한 컨텍스트 변수이다. -->
+    {% for book in object_list %}
+        <li>
+            <!--  
+            url태그를 통해 'books:book_detail'로 지정된 URL패턴을 찾아 URL을 생성한다.
+            즉, path('book/<int:pk>', views.BookDetail.as_view(), name="book_detail"),
+            이 부분을 찾게된다.
+            book.id는 Book테이블의 일련번호로 PK로 지정되어 있는 컬럼이다.
+            -->
+            <a href="{% url 'books:book_detail' book.id %}">{{ book.title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock content %}

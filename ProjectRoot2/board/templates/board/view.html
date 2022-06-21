@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function postDelete(pk) {
+            if (confirm('삭제하시겠습니까?')) {
+                location.href = '/board/delete/' + pk + '/';
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>내용보기</h1>
+    <h4>{{ post.titles }}</h4>
+    <p>
+        {{ post.contents|linebreaks }}
+    </p>
+    {% if post.mainphoto %}
+    <!--  
+            CSS스타일 속성 중
+            max-width : 최대 가로크기를 지정한다.
+            max-height : 최대 세로크기를 지정한다.
+                즉, 300px보다 큰 이미지라면 300으로 고정하고, 그보다 작다면
+                원본크기로 출력한다.
+
+            post.mainphoto.url : 이미지가 저장된 경로인 /media를 자동으로 추가한
+            경로명을 문자열로 반환한다.
+        -->
+    <img src="{{ post.mainphoto.url }}" style="max-height: 300px;"><br>
+    {% endif %}
+    <div>
+        <!-- 게시물의 일련번호를 통해 수정 혹은 삭제처리한다. -->
+        <a href="/board/edit/{{ post.pk }}/">글수정하기</a>
+        <a href="javascript:postDelete({{ post.pk }});">글삭제하기</a>
+        <a href="/board/list">목록바로가기</a>
+    </div>
+</body>
+
+</html>

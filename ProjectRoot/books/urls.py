@@ -11,18 +11,20 @@ path()함수 : route, view 2개의 필수인수와 kwargs, name 2개의 선택�
     name : 각 URL 패턴별로 별칭을 붙여준다. 여기서 정한 이름은 주로 템플릿에서
         사용하게된다.
 '''
-
+# 도서관리 앱은 네임스페이스는 books로 설정
 app_name = "books"
 urlpatterns = [
     path('', views.BooksModelView.as_view(), name="index"),
     
     # 목록(리스트)
-    # path('book/', views.BookList.as_view(), name="book_list"),
-    # path('author/', views.AuthorList.as_view(), name="author_list"),
-    # path('publisher/', views.PublisherList.as_view(), name="publisher_list"),
+    # URL패턴 => localhost/books/테이블명
+    path('book/', views.BookList.as_view(), name="book_list"),
+    path('author/', views.AuthorList.as_view(), name="author_list"),
+    path('publisher/', views.PublisherList.as_view(), name="publisher_list"),
     
     # 상세보기
-    # path('book/<int:pk>', views.BookDetail.as_view(), name="book_Detail"),
-    # path('author/<int:pk>', views.AuthorDetail.as_view(), name="author_Detail"),
-    # path('publisher/<int:pk>', views.PublisherDetail.as_view(), name="publisher_Detail"),
+    # URL패턴 => localhost/books/테이블명/PK키
+    path('book/<int:pk>', views.BookDetail.as_view(), name="book_detail"),
+    path('author/<int:pk>', views.AuthorDetail.as_view(), name="author_detail"),
+    path('publisher/<int:pk>', views.PublisherDetail.as_view(), name="publisher_detail"),
 ]

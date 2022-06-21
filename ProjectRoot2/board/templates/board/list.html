@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>게시판 목록</h1>
+    <table border="1">
+        <tr>
+            <th>제목</th>
+            <th>내용</th>
+        </tr>
+    <!-- views에서 전달한 컨텍스트 변수를 통해 반복 출력함. -->
+    {% for list in postlist %}
+        <tr>
+            <td><a href="/board/view/{{list.pk}}">{{ list.titles }}</a></td>
+            <td>{{ list.contents }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    <a href="/board/write">글쓰기</a>
+</body>
+</html>

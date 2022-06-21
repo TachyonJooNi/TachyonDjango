@@ -21,7 +21,13 @@
         {% with "books:"|add:modelname|lower|add:"_list" as urlvar %}
         <li>
             <!-- href="/books/book/" 과 같은 형태의 링크가 생성된다. -->
-            <a href="잠시비움">{{ modelname }}</a>
+            <!-- <a href="잠시비움">{{ modelname }}</a> -->
+            <!-- <a href="{{ urlvar }}">{{ modelname }}</a> -->
+            <a href="{% url urlvar %}">{{ modelname }}</a>
+
+            <!-- with 태그 없이 템플릿 필터로만 처리할 수 있다. 하지만 코드가 조금 복잡해진다. -->
+            <!-- <a href="{{ 'books:'|add:modelname|lower|add:'_list' }}">{{ modelname }}</a> -->
+            <!-- <a href="{#% url 'books:'|add:modelname|lower|add:'_list' %#}">{{ modelname }}</a> -->
         </li>
         {% endwith %}
     {% endfor %}
