@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, render
 from board.models import Post
-import os
+import os # 물리적 경로쓰기위한 것
 from django.conf import settings
+from django.core.paginator import Paginator # 페이지처리를 위한 모듈
 
 # Create your views here.
 
@@ -11,9 +12,26 @@ def index(request):
 
 
 # 게시판 목록(페이지처리 X)
+# def list(request):
+#     # Post테이블의 모든 레코드를 id(일련번호:PK)의 내림차순으로 가져온다.
+#     postlist = Post.objects.all().order_by("-id")
+#     # 템플릿 렌더링시 컨텍스트 변수 전달
+#     return render(request, "board/list.html", {"postlist": postlist})
+
+
+# 게시판 목록(페이지 처리 O)
 def list(request):
+    # ?page=10 과 같은 형태로 넘어오는 파라미터를 받아서 사용한다.
+    # 만약 파라미터의 값이 없다면 1로 설정한다.
+    page = request.GET.get("page", "1")
     # Post테이블의 모든 레코드를 id(일련번호:PK)의 내림차순으로 가져온다.
     postlist = Post.objects.all().order_by("-id")
+
+    # Paginator 클래스를 통해 게시물을 10개씩 잘라서 변수에 저장해놓는다.
+    paginator = Paginator(postlist, 10)
+    # page번호를 통해 현 페이지에 출력할 게시물을 가져온다.
+    postlist = paginator.get_page(page)
+
     # 템플릿 렌더링시 컨텍스트 변수 전달
     return render(request, "board/list.html", {"postlist": postlist})
 
@@ -22,20 +40,24 @@ def list(request):
 def write(request):
     # 전송방식이 POST라면 submit이므로 폼값을 테이블에 입력한다.
     if request.method == "POST":
-        try:
-            Post.objects.create(
-                titles=request.POST["titles"],
-                contents=request.POST["contents"],
-                # 만약 파일첨부를 하지 않으면 여기서 예외가 발생하여
-                # except절로 넘어가게 된다.
-                mainphoto=request.FILES["mainphoto"],
-            )
-        except:
-            # 파일첨부를 하지 않는 경우이므로 제목과 내용만 입력한다.
-            Post.objects.create(
-                titles=request.POST["titles"],
-                contents=request.POST["contents"],
-            )
+        # 페이징 처리 테스트를 위해 테스트용 더미데이터 입력하려고 임시로 만든 for문
+        for i in range(198):
+            try:
+                Post.objects.create(
+                    titles=request.POST["titles"],
+                    contents=request.POST["contents"],
+                    # 만약 파일첨부를 하지 않으면 여기서 예외가 발생하여
+                    # except절로 넘어가게 된다.
+                    mainphoto=request.FILES["mainphoto"],
+                )
+            except:
+                # 파일첨부를 하지 않는 경우이므로 제목과 내용만 입력한다.
+                Post.objects.create(
+                    # titles=request.POST["titles"],
+                    # 증가하는 i값을 제목을 추가하기 위한 부분(페이징 처리)
+                    titles=request.POST["titles"]+"->"+str(i),
+                    contents=request.POST["contents"],
+                )
         # 입력 처리가 완료되었다면 리스트로 이동한다.
         return redirect("/board/list")
     # 전송방식이 POST가 아니라면 글쓰기 페이지 진입을 위해 랜더링한다.

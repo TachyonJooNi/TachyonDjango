@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# 베이스 디렉토리 경로가 기본적으로 설정되어있다. (현재 ProjectRoot2 를 가리키는 것)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -75,10 +76,23 @@ WSGI_APPLICATION = 'DjangoApps.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# Django를 최초 설치시에는 sqlite를 기본 사용할 수 있다.
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# MySQL(with MariaDB)를 사용하기 위한 설정
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django_db',
+        'USER': 'django_user',
+        'PASSWORD' : '1234',
+        'HOST' : '127.0.0.1',
+        'PORT' : '3306'
     }
 }
 
