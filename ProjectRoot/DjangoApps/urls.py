@@ -36,9 +36,12 @@ urlpatterns = [
     # 방법 2 : 2개의 파일에 작성
     # 설문과 관련된 요청이 들어오면 뒷 부분은 앱수준의 urls.py에서 매핑을 진행한다.
     path("livepolls/", include("livepolls.urls")),
-    #
+    
     # 템플릿 앱에 대한 요청이 들어왔을때의 처리
     path("tempapps/", include("tempapps.urls")),
+    
+    # 도서관리 앱에 관련 요청 매핑
+    path("books/", include("books.urls")),
 ]
 
 """

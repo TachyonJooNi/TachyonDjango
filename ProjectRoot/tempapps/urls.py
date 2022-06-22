@@ -15,7 +15,9 @@ urlpatterns = [
     path("template.tag/", views.templateTag, name="my_tag"),
     #
     # 폼 사용하기
-    # path("form.create/", views.formCreate, name="formCreate"),
-    #
-    # path("thanks/", views.thanks),
+    path("form.create/", views.formCreate, name="formCreate"),
+    path("thanks/", views.thanks),
+    
+    # 글쓰기 폼 실습하기
+    path("boardWrite/", views.boardWrite),
 ]

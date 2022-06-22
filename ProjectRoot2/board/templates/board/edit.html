@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>수정하기</h1>
+    <script>
+        //무기명 함수로 선언함.
+        var checkForms = function (fm) {
+            if (fm.titles.value == '') {
+                alert("제목을 입력하세요.");
+                fm.titles.focus();
+                return false;
+            }
+            if (!fm.contents.value) {
+                alert("내용을 입력하세요.");
+                fm.contents.focus();
+                return false;
+            }
+        }
+    </script>
+    <form method="post" enctype="multipart/form-data" onsubmit="return checkForms(this)">
+        <!-- 기존에 등록된 파일명 -->
+        <input type="hid-den" name="prevphoto" value="{{ post.mainphoto }}">
+        {% csrf_token %}
+        <!-- 수정페이지의 경우 기존 게시물을 쓰기폼에 삽입해야 한다. -->
+        제목 : <input type="text" name="titles" value="{{ post.titles }}">
+        <br>
+        내용 : <textarea name="contents" id="" cols="30" rows="10">{{ post.contents }}</textarea>
+        <br>
+        <input type="file" name="mainphoto" id=""><br>
+        <input type="submit" value="전송하기">
+    </form>
+</body>
+
+</html>

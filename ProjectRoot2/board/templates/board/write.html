@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>작성하기</h1>
+    <!-- 
+    웹프로그래밍을 위해 어떤 언어를 사용하더라도 파일첨부에는 enctype 선언이
+    필수적이다.
+    -->
+    <script>
+        //호출시 전달된 DOM을 통해 <form>태그 하위의 input, select와 같은 태그에 접근할 수 있다.
+        function checkForms(fm) {
+            //만약 제목을 입력하지 않았다면...
+            if (fm.titles.value == '') {
+                //경고창을 띄우고..
+                alert("제목을 입력하세요.");
+                //입력이 편리하게 포커스를 이동하고..
+                fm.titles.focus();
+                //폼값이 submit(전송)되는것을 차단하기 위해 리스너쪽으로 false를 반환한다.
+                return false;
+            }
+            if (!fm.contents.value) {
+                alert("내용을 입력하세요.");
+                fm.contents.focus();
+                return false;
+            }
+        }
+    </script>
+    <!-- submit(전송) 버튼을 누른다면 checkForms()를 호출한다. 이때 매개변수로 <form>태그의
+        DOM이 그대로 전달된다. -->
+    <form method="post" enctype="multipart/form-data" onsubmit="return checkForms(this)">
+        <!-- CSRF공격 차단을 위해 장고에서 발행하는 토큰값. hidden박스로 생성됨. -->
+        {% csrf_token %}
+        제목 : <input type="text" name="titles"> <br>
+        내용 : <textarea name="contents" id="" cols="30" rows="10"></textarea><br>
+        <input type="file" name="mainphoto" id=""><br>
+        <input type="submit" value="전송하기">
+    </form>
+</body>
+
+</html>

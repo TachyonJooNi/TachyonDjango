@@ -1,0 +1,35 @@
+<!-- Books 애플리케이션의 첫번째 화면을 구성 -->
+<!-- base_books.html 템플릿 파일을 상속한다. -->
+{% extends 'base_books.html' %}
+
+<!-- block태그를 통해 content변수에 하위의 모든 내용을 저장한다. -->
+{% block content %}
+    <h2>Books Management System</h2>
+    <ul>
+    <!--  
+        Views.py에서 생성한 context['model_list']를 대상으로 반복 출력한다.
+        context['model_list'] = ['Book', 'Author', 'Publisher'] 이와 같이 정의되어
+        List이므로 for문으로 반복할 수 있다.
+    -->
+    {% for modelname in model_list %}
+        <!--  
+        with : 해당 블럭내에서만 사용할 수 있는 지역변수를 생성하는 템플릿 태그
+        add(문자열연결), lower(소문자로변경) 템플릿 필터를 사용하여 문자열을 생성한다.
+        만약 Book이라는 문자열이 주어지면 book_list라는 문자열을 생성한다.
+        즉, URLConf에서 "books:book_list"라는 별칭을 찾아 URL을 생성하게된다.
+        -->
+        {% with "books:"|add:modelname|lower|add:"_list" as urlvar %}
+        <li>
+            <!-- href="/books/book/" 과 같은 형태의 링크가 생성된다. -->
+            <!-- <a href="잠시비움">{{ modelname }}</a> -->
+            <!-- <a href="{{ urlvar }}">{{ modelname }}</a> -->
+            <a href="{% url urlvar %}">{{ modelname }}</a>
+
+            <!-- with 태그 없이 템플릿 필터로만 처리할 수 있다. 하지만 코드가 조금 복잡해진다. -->
+            <!-- <a href="{{ 'books:'|add:modelname|lower|add:'_list' }}">{{ modelname }}</a> -->
+            <!-- <a href="{#% url 'books:'|add:modelname|lower|add:'_list' %#}">{{ modelname }}</a> -->
+        </li>
+        {% endwith %}
+    {% endfor %}
+    </ul>
+{% endblock content %}
